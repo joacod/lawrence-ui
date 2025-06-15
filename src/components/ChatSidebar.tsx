@@ -13,7 +13,8 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
   const sortedSessions = [...sessions].sort((a, b) => b.id.localeCompare(a.id))
 
   return (
-    <div className={`relative flex flex-col h-full transition-all duration-300 ${isCollapsed ? 'w-0' : 'w-64 border-r border-base-300'}`}>
+    <div className={`relative flex flex-col h-full transition-all duration-300 ${isCollapsed ? 'w-0' : 'w-64'}`}>
+      <div className={`absolute right-0 top-0 bottom-0 w-[1px] bg-base-300 transition-opacity duration-300 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`} />
       {isCollapsed ? (
         <button
           onClick={() => setIsCollapsed(false)}
@@ -33,9 +34,9 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
           <div className="flex-none bg-base-100 p-4 pr-8">
             <button
               onClick={onNewChat}
-              className="btn btn-primary w-full"
+              className="btn btn-primary w-full overflow-hidden"
             >
-              New Feature
+              <span className="whitespace-nowrap">New Feature</span>
             </button>
           </div>
           
