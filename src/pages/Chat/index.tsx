@@ -70,7 +70,7 @@ export function Chat() {
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col bg-base-200">
+    <div className="h-full flex flex-col bg-base-200">
       <div className="flex-1 flex min-h-0">
         <ChatSidebar
           sessions={sessions}

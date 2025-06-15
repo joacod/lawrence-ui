@@ -9,13 +9,15 @@ import './style.css';
 export function App() {
 	return (
 		<LocationProvider>
-			<Header />
-			<main>
-				<Router>
-					<Route path="/" component={Chat} />
-					<Route default component={NotFound} />
-				</Router>
-			</main>
+			<div className="flex flex-col h-screen overflow-hidden">
+				<Header />
+				<main className="flex-1 min-h-0">
+					<Router>
+						<Route path="/" component={Chat} />
+						<Route default component={NotFound} />
+					</Router>
+				</main>
+			</div>
 		</LocationProvider>
 	);
 }
