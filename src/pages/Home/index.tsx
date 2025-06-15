@@ -1,60 +1,67 @@
-import { useState, useRef, useEffect } from 'preact/hooks';
-import { mockApi } from '../../services/mockApi';
+import { useState, useRef, useEffect } from 'preact/hooks'
+import { chatApi } from '../../services/chatApi'
 
 interface Message {
-  id: string;
-  content: string;
-  isUser: boolean;
+  id: string
+  content: string
+  isUser: boolean
 }
 
 export function Home() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<Message[]>([])
+  const [input, setInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    scrollToBottom()
+  }, [messages])
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading) return
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
       content: input,
-      isUser: true
-    };
+      isUser: true,
+    }
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsLoading(true);
+    setMessages((prev) => [...prev, userMessage])
+    setInput('')
+    setIsLoading(true)
 
     try {
-      const response = await mockApi.processFeature(input);
+      const response = await chatApi.processFeature(input)
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         content: response.response,
-        isUser: false
-      };
-      setMessages(prev => [...prev, aiMessage]);
+        isUser: false,
+      }
+      setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error sending message:', error)
+      const errorMessage: Message = {
+        id: crypto.randomUUID(),
+        content:
+          "Sorry, I'm having trouble connecting to the service. Please try again later.",
+        isUser: false,
+      }
+      setMessages((prev) => [...prev, errorMessage])
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
+      e.preventDefault()
+      handleSend()
     }
-  };
+  }
 
   return (
     <div className="flex flex-col h-screen bg-base-200">
@@ -62,8 +69,19 @@ export function Home() {
         <div className="max-w-3xl mx-auto">
           <div className="space-y-4">
             {messages.map((message) => (
-              <div key={message.id} className={`chat ${message.isUser ? 'chat-end' : 'chat-start'}`}>
-                <div className={`chat-bubble ${message.isUser ? 'chat-bubble-primary' : 'chat-bubble-secondary'} max-w-[80%]`}>
+              <div
+                key={message.id}
+                className={`chat ${message.isUser ? 'chat-end' : 'chat-start'}`}
+              >
+                <div
+                  className={`chat-bubble ${
+                    message.isUser
+                      ? 'chat-bubble-primary'
+                      : message.content.includes("Sorry, I'm having trouble")
+                      ? 'chat-bubble-error'
+                      : 'chat-bubble-secondary'
+                  } max-w-[80%]`}
+                >
                   {message.content}
                 </div>
               </div>
@@ -79,7 +97,7 @@ export function Home() {
           </div>
         </div>
       </div>
-      
+
       <div className="p-4 bg-base-100 border-t border-base-300">
         <div className="max-w-3xl mx-auto">
           <div className="flex gap-2">
@@ -102,5 +120,5 @@ export function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }
