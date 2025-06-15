@@ -67,7 +67,7 @@ export function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-base-200">
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 pt-20">
         <div className="max-w-3xl mx-auto">
           <div className="space-y-4">
             {messages.map((message) => (
