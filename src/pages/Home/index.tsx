@@ -67,7 +67,7 @@ export function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-base-200">
-      <div className="flex-1 overflow-y-auto p-4 pt-20">
+      <div id="chat-messages" className="flex-1 overflow-y-auto p-4 pt-20">
         <div className="max-w-3xl mx-auto">
           <div className="space-y-4">
             {messages.map((message) => (
@@ -100,7 +100,7 @@ export function Home() {
         </div>
       </div>
 
-      <div className="p-4 bg-base-100 border-t border-base-300">
+      <div id="chat-input" className="sticky bottom-0 p-4 bg-base-100 border-t border-base-300">
         <div className="max-w-3xl mx-auto">
           <div className="flex gap-2">
             <textarea
