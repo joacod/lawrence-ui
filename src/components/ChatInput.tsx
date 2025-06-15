@@ -14,7 +14,7 @@ export function ChatInput({ input, isLoading, onInputChange, onSend }: ChatInput
   }
 
   return (
-    <div id="chat-input" className="sticky bottom-0 p-4 bg-base-100 border-t border-base-300">
+    <div id="chat-input" className="sticky bottom-0 bg-base-100 p-4">
       <div className="max-w-3xl mx-auto">
         <div className="flex gap-2 items-center">
           <textarea
