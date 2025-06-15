@@ -11,6 +11,7 @@ export function Home() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [sessionId, setSessionId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -35,7 +36,8 @@ export function Home() {
     setIsLoading(true)
 
     try {
-      const response = await chatApi.processFeature(input)
+      const response = await chatApi.processFeature(input, sessionId)
+      setSessionId(response.session_id)
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         content: response.response,

@@ -11,13 +11,16 @@ interface HealthResponse {
 const API_URL = 'http://0.0.0.0:8000'
 
 export const chatApi = {
-  async processFeature(feature: string): Promise<ChatResponse> {
-    const response = await fetch(`${API_URL}/process`, {
+  async processFeature(
+    feature: string,
+    sessionId: string | null = null
+  ): Promise<ChatResponse> {
+    const response = await fetch(`${API_URL}/process_feature`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ feature }),
+      body: JSON.stringify({ feature, session_id: sessionId }),
     })
 
     if (!response.ok) {
