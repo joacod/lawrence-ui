@@ -10,7 +10,7 @@ export function Header() {
     <div className="navbar bg-neutral text-neutral-content shadow-sm sticky top-0 z-50">
       <div className="flex-1">
         <a href="/" className="btn btn-ghost text-xl">
-          Lawrence
+          Lawrence AI
         </a>
       </div>
       <div className="flex-none">
