@@ -10,10 +10,10 @@ export function MarkdownModal({ isOpen, onClose, markdown }: MarkdownModalProps)
   if (!isOpen) return null
 
   return (
-    <>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <input type="checkbox" id="markdown_modal" className="modal-toggle" checked={isOpen} onChange={onClose} />
-      <div className="modal modal-bottom sm:modal-middle" role="dialog">
-        <div className="modal-box">
+      <div className="modal modal-open modal-bottom sm:modal-middle">
+        <div className="modal-box !max-w-[95%] md:!max-w-[85%] lg:!max-w-[75%] w-full max-h-[85vh] overflow-y-auto">
           <h3 className="font-bold text-lg mb-4">Markdown Content</h3>
           <div className="py-4">
             <pre className="whitespace-pre-wrap bg-base-200 p-4 rounded-lg overflow-x-auto">
@@ -30,6 +30,6 @@ export function MarkdownModal({ isOpen, onClose, markdown }: MarkdownModalProps)
         </div>
         <label className="modal-backdrop" htmlFor="markdown_modal" onClick={onClose}>Close</label>
       </div>
-    </>
+    </div>
   )
 } 
