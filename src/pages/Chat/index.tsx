@@ -3,16 +3,7 @@ import { chatApi } from '../../services/chatApi'
 import { ChatMessages } from '../../components/ChatMessages'
 import { ChatInput } from '../../components/ChatInput'
 import { ChatSidebar } from '../../components/ChatSidebar'
-
-interface Message {
-  id: string
-  content: string
-  isUser: boolean
-}
-
-interface Session {
-  id: string
-}
+import { Message, Session } from '../../models/chat'
 
 export function Chat() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -33,6 +24,7 @@ export function Chat() {
       id: crypto.randomUUID(),
       content: input,
       isUser: true,
+      markdown: ''
     }
 
     setMessages((prev) => [...prev, userMessage])
@@ -53,6 +45,7 @@ export function Chat() {
         id: crypto.randomUUID(),
         content: response.response,
         isUser: false,
+        markdown: response.markdown
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
@@ -62,6 +55,7 @@ export function Chat() {
         content:
           "Sorry, I'm having trouble connecting to the service. Please try again later.",
         isUser: false,
+        markdown: ''
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {

@@ -1,12 +1,4 @@
-interface ChatResponse {
-  session_id: string | null
-  response: string
-}
-
-interface HealthResponse {
-  status: string
-  service: string
-}
+import { ChatResponse, HealthResponse } from '../models/chat'
 
 const API_URL = 'http://0.0.0.0:8000'
 
