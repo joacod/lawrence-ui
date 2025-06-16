@@ -18,4 +18,4 @@ export interface ChatResponse {
 export interface HealthResponse {
   status: string
   service: string
-} 
+}
