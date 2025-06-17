@@ -42,7 +42,7 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                   >
                     {message.content}
                   </div>
-                  {!message.isUser && (
+                  {!message.isUser && message.markdown && (
                     <button
                       className="btn btn-soft btn-sm"
                       onClick={() => setSelectedMarkdown(message.markdown)}
