@@ -17,7 +17,7 @@ export function Header() {
         <ul className="menu menu-horizontal px-1">
           <li>
             <button
-              className="btn btn-info"
+              className="btn btn-primary"
               onClick={() => setIsHealthcheckOpen(true)}
             >
               Healthcheck

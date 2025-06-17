@@ -1,4 +1,3 @@
-import { h } from 'preact'
 import { useState } from 'preact/hooks'
 
 interface ChatSidebarProps {
@@ -13,8 +12,16 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
   const sortedSessions = [...sessions].sort((a, b) => b.id.localeCompare(a.id))
 
   return (
-    <div className={`relative flex flex-col h-full transition-all duration-300 ${isCollapsed ? 'w-0' : 'w-64'}`}>
-      <div className={`absolute right-0 top-0 bottom-0 w-[1px] bg-base-300 transition-opacity duration-300 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`} />
+    <div
+      className={`relative flex flex-col h-full transition-all duration-300 ${
+        isCollapsed ? 'w-0' : 'w-64'
+      }`}
+    >
+      <div
+        className={`absolute right-0 top-0 bottom-0 w-[1px] bg-base-300 transition-opacity duration-300 ${
+          isCollapsed ? 'opacity-0' : 'opacity-100'
+        }`}
+      />
       {isCollapsed ? (
         <button
           onClick={() => setIsCollapsed(false)}
@@ -39,11 +46,11 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
               <span className="whitespace-nowrap">New Feature</span>
             </button>
           </div>
-          
+
           <div className="flex-none">
             <div className="divider mx-4" />
           </div>
-          
+
           <div className="flex-1 min-h-0 overflow-y-auto">
             {sortedSessions.map((session) => (
               <div
@@ -59,4 +66,4 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
       )}
     </div>
   )
-} 
+}

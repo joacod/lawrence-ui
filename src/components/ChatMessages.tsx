@@ -34,10 +34,10 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                   <div
                     className={`chat-bubble ${
                       message.isUser
-                        ? 'chat-bubble-primary'
+                        ? 'chat-bubble-secondary'
                         : message.content.includes("Sorry, I'm having trouble")
                         ? 'chat-bubble-error'
-                        : 'chat-bubble-secondary'
+                        : 'chat-bubble-accent'
                     } max-w-[80%]`}
                   >
                     {message.content}
@@ -67,7 +67,7 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
             ))}
             {isLoading && (
               <div className="chat chat-start">
-                <div className="chat-bubble chat-bubble-secondary">
+                <div className="chat-bubble chat-bubble-accent">
                   <span className="loading loading-dots loading-sm"></span>
                 </div>
               </div>

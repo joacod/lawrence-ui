@@ -5,7 +5,12 @@ interface ChatInputProps {
   onSend: () => void
 }
 
-export function ChatInput({ input, isLoading, onInputChange, onSend }: ChatInputProps) {
+export function ChatInput({
+  input,
+  isLoading,
+  onInputChange,
+  onSend,
+}: ChatInputProps) {
   const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -21,7 +26,9 @@ export function ChatInput({ input, isLoading, onInputChange, onSend }: ChatInput
             className="textarea textarea-bordered flex-1"
             placeholder="Type your message..."
             value={input}
-            onInput={(e) => onInputChange((e.target as HTMLTextAreaElement).value)}
+            onInput={(e) =>
+              onInputChange((e.target as HTMLTextAreaElement).value)
+            }
             onKeyPress={handleKeyPress}
             rows={1}
           />
@@ -36,4 +43,4 @@ export function ChatInput({ input, isLoading, onInputChange, onSend }: ChatInput
       </div>
     </div>
   )
-} 
+}
