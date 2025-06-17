@@ -3,6 +3,7 @@ export interface Message {
   content: string
   isUser: boolean
   markdown: string
+  questions?: string[]
 }
 
 export interface Session {
@@ -13,6 +14,7 @@ export interface ChatResponse {
   session_id: string | null
   response: string
   markdown: string
+  questions?: string[]
 }
 
 export interface HealthResponse {

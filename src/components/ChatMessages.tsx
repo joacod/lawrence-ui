@@ -41,6 +41,18 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                     } max-w-[80%]`}
                   >
                     {message.content}
+                    {message.questions && message.questions.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-base-300">
+                        <div className="font-semibold text-sm mb-2">
+                          Pending Questions:
+                        </div>
+                        <ul className="list-disc list-inside space-y-1 text-sm">
+                          {message.questions.map((question, index) => (
+                            <li key={index}>{question}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                   {!message.isUser && message.markdown && (
                     <button

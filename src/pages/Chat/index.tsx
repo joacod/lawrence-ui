@@ -24,7 +24,7 @@ export function Chat() {
       id: crypto.randomUUID(),
       content: input,
       isUser: true,
-      markdown: ''
+      markdown: '',
     }
 
     setMessages((prev) => [...prev, userMessage])
@@ -35,17 +35,18 @@ export function Chat() {
       const response = await chatApi.processFeature(input, sessionId)
       const newSessionId = response.session_id
       setSessionId(newSessionId)
-      
+
       // Add new session to the list if it doesn't exist
-      if (newSessionId && !sessions.some(s => s.id === newSessionId)) {
-        setSessions(prev => [...prev, { id: newSessionId }])
+      if (newSessionId && !sessions.some((s) => s.id === newSessionId)) {
+        setSessions((prev) => [...prev, { id: newSessionId }])
       }
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         content: response.response,
         isUser: false,
-        markdown: response.markdown
+        markdown: response.markdown,
+        questions: response.questions,
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
@@ -55,7 +56,7 @@ export function Chat() {
         content:
           "Sorry, I'm having trouble connecting to the service. Please try again later.",
         isUser: false,
-        markdown: ''
+        markdown: '',
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {
@@ -66,10 +67,7 @@ export function Chat() {
   return (
     <div className="h-full flex flex-col bg-base-200">
       <div className="flex-1 flex min-h-0">
-        <ChatSidebar
-          sessions={sessions}
-          onNewChat={handleNewChat}
-        />
+        <ChatSidebar sessions={sessions} onNewChat={handleNewChat} />
         <div className="flex-1 overflow-y-auto">
           <ChatMessages messages={messages} isLoading={isLoading} />
         </div>

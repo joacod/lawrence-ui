@@ -1,17 +1,25 @@
-import { useEffect } from 'preact/hooks'
-
 interface MarkdownModalProps {
   isOpen: boolean
   onClose: () => void
   markdown: string
 }
 
-export function MarkdownModal({ isOpen, onClose, markdown }: MarkdownModalProps) {
+export function MarkdownModal({
+  isOpen,
+  onClose,
+  markdown,
+}: MarkdownModalProps) {
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <input type="checkbox" id="markdown_modal" className="modal-toggle" checked={isOpen} onChange={onClose} />
+      <input
+        type="checkbox"
+        id="markdown_modal"
+        className="modal-toggle"
+        checked={isOpen}
+        onChange={onClose}
+      />
       <div className="modal modal-open modal-bottom sm:modal-middle">
         <div className="modal-box !max-w-[95%] md:!max-w-[85%] lg:!max-w-[75%] w-full max-h-[85vh] overflow-y-auto">
           <h3 className="font-bold text-lg mb-4">Markdown Content</h3>
@@ -28,8 +36,14 @@ export function MarkdownModal({ isOpen, onClose, markdown }: MarkdownModalProps)
             </form>
           </div>
         </div>
-        <label className="modal-backdrop" htmlFor="markdown_modal" onClick={onClose}>Close</label>
+        <label
+          className="modal-backdrop"
+          htmlFor="markdown_modal"
+          onClick={onClose}
+        >
+          Close
+        </label>
       </div>
     </div>
   )
-} 
+}
