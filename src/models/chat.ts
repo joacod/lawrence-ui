@@ -8,10 +8,12 @@ export interface Message {
 
 export interface Session {
   id: string
+  title: string
 }
 
 export interface ChatResponse {
   session_id: string | null
+  title: string
   response: string
   markdown: string
   questions?: string[]

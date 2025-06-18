@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks'
 
 interface ChatSidebarProps {
-  sessions: { id: string }[]
+  sessions: { id: string; title: string }[]
   onNewChat: () => void
 }
 
@@ -56,9 +56,9 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
               <div
                 key={session.id}
                 className="px-4 py-2 hover:bg-base-200 cursor-pointer truncate"
-                title={session.id}
+                title={session.title}
               >
-                {session.id}
+                {session.title}
               </div>
             ))}
           </div>
