@@ -9,11 +9,15 @@ export interface Message {
 export interface Session {
   id: string
   title: string
+  created_at: string
+  updated_at: string
 }
 
 export interface ChatResponse {
   session_id: string | null
   title: string
+  created_at: string
+  updated_at: string
   response: string
   markdown: string
   questions?: string[]

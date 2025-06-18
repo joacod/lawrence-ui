@@ -1,15 +1,17 @@
 import { useState } from 'preact/hooks'
 
 interface ChatSidebarProps {
-  sessions: { id: string; title: string }[]
+  sessions: { id: string; title: string; created_at: string; updated_at: string }[]
   onNewChat: () => void
 }
 
 export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
-  // Sort sessions by ID (assuming newer sessions have higher IDs)
-  const sortedSessions = [...sessions].sort((a, b) => b.id.localeCompare(a.id))
+  // Sort sessions by updated_at (most recently updated first)
+  const sortedSessions = [...sessions].sort((a, b) => 
+    new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+  )
 
   return (
     <div

@@ -38,7 +38,12 @@ export function Chat() {
 
       // Add new session to the list if it doesn't exist
       if (newSessionId && !sessions.some((s) => s.id === newSessionId)) {
-        setSessions((prev) => [...prev, { id: newSessionId, title: response.title }])
+        setSessions((prev) => [...prev, { 
+          id: newSessionId, 
+          title: response.title,
+          created_at: response.created_at,
+          updated_at: response.updated_at
+        }])
       }
 
       const aiMessage: Message = {
