@@ -15,11 +15,44 @@ export const chatApi = {
       body: JSON.stringify({ feature, session_id: sessionId }),
     })
 
-    if (!response.ok) {
-      throw new Error('Failed to process feature')
-    }
+    const data = await response.json()
 
-    return response.json()
+    // Handle different status codes
+    switch (response.status) {
+      case 200:
+        // Success - return the data as-is
+        return data
+      case 400:
+        // Bad Request (security_rejection) - return as warning
+        return {
+          data: null,
+          error: {
+            type: 'security_rejection',
+            message: data.error?.message || 'Invalid request',
+          },
+        }
+      case 500:
+        // Internal Server Error - return as error
+        return {
+          data: null,
+          error: {
+            type: 'internal_server_error',
+            message: data.error?.message || 'Internal server error',
+          },
+        }
+      case 503:
+        // Service Unavailable (internal_server_error) - return as error
+        return {
+          data: null,
+          error: {
+            type: 'internal_server_error',
+            message: data.error?.message || 'Service temporarily unavailable',
+          },
+        }
+      default:
+        // Any other status code - throw for connectivity issues
+        throw new Error('Failed to process feature')
+    }
   },
 
   async checkHealth(): Promise<HealthResponse> {

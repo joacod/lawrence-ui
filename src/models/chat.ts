@@ -4,6 +4,8 @@ export interface Message {
   isUser: boolean
   markdown: string
   questions?: string[]
+  isWarning?: boolean
+  isError?: boolean
 }
 
 export interface Session {
@@ -13,7 +15,7 @@ export interface Session {
   updated_at: string
 }
 
-export interface ChatResponse {
+export interface ChatResponseData {
   session_id: string | null
   title: string
   created_at: string
@@ -21,6 +23,14 @@ export interface ChatResponse {
   response: string
   markdown: string
   questions?: string[]
+}
+
+export interface ChatResponse {
+  data: ChatResponseData | null
+  error: {
+    type: string
+    message: string
+  } | null
 }
 
 export interface HealthResponse {

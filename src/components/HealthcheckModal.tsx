@@ -23,7 +23,7 @@ export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
       const data = await chatApi.checkHealth()
       setHealthStatus(data)
     } catch (error) {
-      setError('Failed to check service health')
+      setError('Service unavailable')
       setHealthStatus(null)
     } finally {
       setIsLoading(false)
