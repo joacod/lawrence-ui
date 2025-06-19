@@ -35,13 +35,15 @@ export function Chat() {
       const response = await chatApi.processFeature(input, sessionId)
       
       if (!response.data) {
-        // Handle API response error with warning bubble
+        // Handle API response error
+        const isInternalError = response.error?.type === 'internal_server_error'
         const errorMessage: Message = {
           id: crypto.randomUUID(),
           content: response.error?.message || "An unexpected error occurred",
           isUser: false,
           markdown: '',
-          isWarning: true
+          isError: isInternalError,
+          isWarning: !isInternalError
         }
         setMessages((prev) => [...prev, errorMessage])
         return
