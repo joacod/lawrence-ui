@@ -33,28 +33,43 @@ export function Chat() {
 
     try {
       const response = await chatApi.processFeature(input, sessionId)
-      const newSessionId = response.session_id
+      
+      if (!response.data) {
+        // Handle API response error with warning bubble
+        const errorMessage: Message = {
+          id: crypto.randomUUID(),
+          content: response.error?.message || "An unexpected error occurred",
+          isUser: false,
+          markdown: '',
+          isWarning: true
+        }
+        setMessages((prev) => [...prev, errorMessage])
+        return
+      }
+
+      const newSessionId = response.data.session_id
       setSessionId(newSessionId)
 
       // Add new session to the list if it doesn't exist
       if (newSessionId && !sessions.some((s) => s.id === newSessionId)) {
         setSessions((prev) => [...prev, { 
           id: newSessionId, 
-          title: response.title,
-          created_at: response.created_at,
-          updated_at: response.updated_at
+          title: response.data.title,
+          created_at: response.data.created_at,
+          updated_at: response.data.updated_at
         }])
       }
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
-        content: response.response,
+        content: response.data.response,
         isUser: false,
-        markdown: response.markdown,
-        questions: response.questions,
+        markdown: response.data.markdown,
+        questions: response.data.questions,
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
+      // Handle service/connectivity errors with error bubble
       console.error('Error sending message:', error)
       const errorMessage: Message = {
         id: crypto.randomUUID(),
@@ -62,6 +77,7 @@ export function Chat() {
           "Sorry, I'm having trouble connecting to the service. Please try again later.",
         isUser: false,
         markdown: '',
+        isError: true
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {

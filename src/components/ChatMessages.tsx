@@ -20,6 +20,19 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
     scrollToBottom()
   }, [messages])
 
+  const getBubbleClass = (message: Message) => {
+    if (message.isUser) {
+      return 'chat-bubble-secondary'
+    }
+    if (message.isError) {
+      return 'chat-bubble-error'
+    }
+    if (message.isWarning) {
+      return 'chat-bubble-warning'
+    }
+    return 'chat-bubble-accent'
+  }
+
   return (
     <>
       <div id="chat-messages" className="flex-1 overflow-y-auto p-4 pt-20">
@@ -32,13 +45,7 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
               >
                 <div className="flex items-center gap-2">
                   <div
-                    className={`chat-bubble ${
-                      message.isUser
-                        ? 'chat-bubble-secondary'
-                        : message.content.includes("Sorry, I'm having trouble")
-                        ? 'chat-bubble-error'
-                        : 'chat-bubble-accent'
-                    } max-w-[80%]`}
+                    className={`chat-bubble ${getBubbleClass(message)} max-w-[80%]`}
                   >
                     {message.content}
                     {message.questions && message.questions.length > 0 && (
