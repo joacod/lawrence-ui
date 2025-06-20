@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'preact/hooks'
 import { chatApi } from '../services/chatApi'
+import { HealthResponseData } from '../models/chat'
 
 interface HealthcheckModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-interface HealthStatus {
-  status: string
-  service: string
-}
-
 export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
-  const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null)
+  const [healthStatus, setHealthStatus] = useState<HealthResponseData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,8 +16,13 @@ export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
     setIsLoading(true)
     setError(null)
     try {
-      const data = await chatApi.checkHealth()
-      setHealthStatus(data)
+      const response = await chatApi.checkHealth()
+      if (response.data) {
+        setHealthStatus(response.data)
+      } else {
+        setError(response.error?.message || 'Service unavailable')
+        setHealthStatus(null)
+      }
     } catch (error) {
       setError('Service unavailable')
       setHealthStatus(null)

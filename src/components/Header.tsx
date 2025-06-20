@@ -1,9 +1,7 @@
-import { useLocation } from 'preact-iso'
 import { useState } from 'preact/hooks'
 import { HealthcheckModal } from './HealthcheckModal'
 
 export function Header() {
-  const { url } = useLocation()
   const [isHealthcheckOpen, setIsHealthcheckOpen] = useState(false)
 
   return (
