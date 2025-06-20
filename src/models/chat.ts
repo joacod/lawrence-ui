@@ -27,7 +27,7 @@ export interface ChatResponseData {
 
 export interface HealthResponseData {
   status: string
-  service: string
+  message: string
 }
 
 export interface ConversationMessage {

@@ -8,7 +8,9 @@ interface HealthcheckModalProps {
 }
 
 export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
-  const [healthStatus, setHealthStatus] = useState<HealthResponseData | null>(null)
+  const [healthStatus, setHealthStatus] = useState<HealthResponseData | null>(
+    null
+  )
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -41,7 +43,13 @@ export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
 
   return (
     <>
-      <input type="checkbox" id="healthcheck_modal" className="modal-toggle" checked={isOpen} onChange={onClose} />
+      <input
+        type="checkbox"
+        id="healthcheck_modal"
+        className="modal-toggle"
+        checked={isOpen}
+        onChange={onClose}
+      />
       <div className="modal modal-bottom sm:modal-middle" role="dialog">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-4">Service Health Status</h3>
@@ -113,9 +121,15 @@ export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold">Service:</span>
-                    <span className="badge badge-info">
-                      {healthStatus.service}
+                    <span className="font-semibold">Message:</span>
+                    <span
+                      className={`badge ${
+                        healthStatus.status === 'healthy'
+                          ? 'badge-success'
+                          : 'badge-error'
+                      }`}
+                    >
+                      {healthStatus.message}
                     </span>
                   </div>
                 </div>
@@ -130,7 +144,13 @@ export function HealthcheckModal({ isOpen, onClose }: HealthcheckModalProps) {
             </form>
           </div>
         </div>
-        <label className="modal-backdrop" htmlFor="healthcheck_modal" onClick={onClose}>Close</label>
+        <label
+          className="modal-backdrop"
+          htmlFor="healthcheck_modal"
+          onClick={onClose}
+        >
+          Close
+        </label>
       </div>
     </>
   )
