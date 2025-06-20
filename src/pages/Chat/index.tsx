@@ -113,6 +113,15 @@ export function Chat() {
             updated_at: response.data.updated_at,
           },
         ])
+      } else if (newSessionId) {
+        // Update the existing session's updated_at timestamp, newest interactions on top
+        setSessions((prev) =>
+          prev.map((session) =>
+            session.id === newSessionId
+              ? { ...session, updated_at: response.data.updated_at }
+              : session
+          )
+        )
       }
 
       const aiMessage: Message = {
