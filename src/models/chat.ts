@@ -25,15 +25,7 @@ export interface ChatResponseData {
   questions?: string[]
 }
 
-export interface ChatResponse {
-  data: ChatResponseData | null
-  error: {
-    type: string
-    message: string
-  } | null
-}
-
-export interface HealthResponse {
+export interface HealthResponseData {
   status: string
   service: string
 }
@@ -53,12 +45,4 @@ export interface SessionHistoryData {
   created_at: string
   updated_at: string
   conversation: ConversationMessage[]
-}
-
-export interface SessionHistoryResponse {
-  data: SessionHistoryData[]
-  error: {
-    type: string
-    message: string
-  } | null
 }
