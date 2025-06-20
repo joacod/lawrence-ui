@@ -1,4 +1,8 @@
-import { ChatResponse, HealthResponse } from '../models/chat'
+import {
+  ChatResponse,
+  HealthResponse,
+  SessionHistoryResponse,
+} from '../models/chat'
 
 const API_URL = 'http://0.0.0.0:8000'
 
@@ -60,6 +64,16 @@ export const chatApi = {
 
     if (!response.ok) {
       throw new Error('Health check failed')
+    }
+
+    return response.json()
+  },
+
+  async getSessionHistory(sessionId: string): Promise<SessionHistoryResponse> {
+    const response = await fetch(`${API_URL}/session/${sessionId}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch session history')
     }
 
     return response.json()

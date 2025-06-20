@@ -37,3 +37,28 @@ export interface HealthResponse {
   status: string
   service: string
 }
+
+export interface ConversationMessage {
+  type: 'user' | 'assistant'
+  content: string | null
+  response: string | null
+  markdown: string | null
+  questions: string[]
+  timestamp: string
+}
+
+export interface SessionHistoryData {
+  session_id: string
+  title: string
+  created_at: string
+  updated_at: string
+  conversation: ConversationMessage[]
+}
+
+export interface SessionHistoryResponse {
+  data: SessionHistoryData[]
+  error: {
+    type: string
+    message: string
+  } | null
+}
