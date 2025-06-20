@@ -1,16 +1,29 @@
 import { useState } from 'preact/hooks'
 
 interface ChatSidebarProps {
-  sessions: { id: string; title: string; created_at: string; updated_at: string }[]
+  sessions: {
+    id: string
+    title: string
+    created_at: string
+    updated_at: string
+  }[]
   onNewChat: () => void
+  onSessionClick: (sessionId: string) => void
+  activeSessionId?: string | null
 }
 
-export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
+export function ChatSidebar({
+  sessions,
+  onNewChat,
+  onSessionClick,
+  activeSessionId,
+}: ChatSidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   // Sort sessions by updated_at (most recently updated first)
-  const sortedSessions = [...sessions].sort((a, b) => 
-    new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+  const sortedSessions = [...sessions].sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
   )
 
   return (
@@ -57,8 +70,13 @@ export function ChatSidebar({ sessions, onNewChat }: ChatSidebarProps) {
             {sortedSessions.map((session) => (
               <div
                 key={session.id}
-                className="px-4 py-2 hover:bg-base-200 cursor-pointer truncate"
+                className={`px-4 py-2 hover:bg-base-200 cursor-pointer truncate ${
+                  activeSessionId === session.id
+                    ? 'bg-base-200 border-l-2 border-primary'
+                    : ''
+                }`}
                 title={session.title}
+                onClick={() => onSessionClick(session.id)}
               >
                 {session.title}
               </div>

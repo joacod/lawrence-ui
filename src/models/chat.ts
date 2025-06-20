@@ -25,15 +25,24 @@ export interface ChatResponseData {
   questions?: string[]
 }
 
-export interface ChatResponse {
-  data: ChatResponseData | null
-  error: {
-    type: string
-    message: string
-  } | null
+export interface HealthResponseData {
+  status: string
+  message: string
 }
 
-export interface HealthResponse {
-  status: string
-  service: string
+export interface ConversationMessage {
+  type: 'user' | 'assistant'
+  content: string | null
+  response: string | null
+  markdown: string | null
+  questions: string[]
+  timestamp: string
+}
+
+export interface SessionHistoryData {
+  session_id: string
+  title: string
+  created_at: string
+  updated_at: string
+  conversation: ConversationMessage[]
 }

@@ -1,9 +1,9 @@
 import { render } from 'preact';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
-import { Header } from './components/Header.jsx';
-import { Chat } from './pages/Chat/index.js';
-import { NotFound } from './pages/_404.jsx';
+import { Header } from './components/Header';
+import { Chat } from './pages/Chat/index';
+import { NotFound } from './pages/_404';
 import './style.css';
 
 export function App() {

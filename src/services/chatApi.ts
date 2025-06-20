@@ -1,4 +1,9 @@
-import { ChatResponse, HealthResponse } from '../models/chat'
+import { ApiResponse } from '../models/api'
+import {
+  ChatResponseData,
+  HealthResponseData,
+  SessionHistoryData,
+} from '../models/chat'
 
 const API_URL = 'http://0.0.0.0:8000'
 
@@ -6,7 +11,7 @@ export const chatApi = {
   async processFeature(
     feature: string,
     sessionId: string | null = null
-  ): Promise<ChatResponse> {
+  ): Promise<ApiResponse<ChatResponseData>> {
     const response = await fetch(`${API_URL}/process_feature`, {
       method: 'POST',
       headers: {
@@ -55,11 +60,21 @@ export const chatApi = {
     }
   },
 
-  async checkHealth(): Promise<HealthResponse> {
+  async checkHealth(): Promise<ApiResponse<HealthResponseData>> {
     const response = await fetch(`${API_URL}/health`)
 
     if (!response.ok) {
       throw new Error('Health check failed')
+    }
+
+    return response.json()
+  },
+
+  async getSessionHistory(sessionId: string): Promise<ApiResponse<SessionHistoryData[]>> {
+    const response = await fetch(`${API_URL}/session/${sessionId}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch session history')
     }
 
     return response.json()
