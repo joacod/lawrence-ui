@@ -126,10 +126,10 @@ export function Chat() {
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
-        content: response.data.response,
+        content: response.data.chat.response,
         isUser: false,
-        markdown: response.data.markdown,
-        questions: response.data.questions,
+        markdown: JSON.stringify(response.data.feature_overview),
+        questions: response.data.chat.questions,
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
