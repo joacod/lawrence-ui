@@ -60,10 +60,13 @@ export interface HealthResponseData {
 export interface ConversationMessage {
   type: 'user' | 'assistant'
   content: string | null
-  response: string | null
-  markdown: string | null
-  questions: string[]
   timestamp: string
+  chat: ChatData | null
+  feature_overview: FeatureOverview | null
+  tickets: {
+    backend: Ticket[]
+    frontend: Ticket[]
+  } | null
 }
 
 export interface SessionHistoryData {
