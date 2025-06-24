@@ -1,3 +1,5 @@
+import { FeatureOverview } from '../models/chat'
+
 interface MarkdownModalProps {
   isOpen: boolean
   onClose: () => void
@@ -11,6 +13,14 @@ export function MarkdownModal({
 }: MarkdownModalProps) {
   if (!isOpen) return null
 
+  let featureOverview: FeatureOverview | null = null
+  try {
+    featureOverview = JSON.parse(markdown)
+  } catch (error) {
+    // Fallback to displaying raw markdown if parsing fails
+    console.warn('Failed to parse feature overview JSON:', error)
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <input
@@ -22,11 +32,41 @@ export function MarkdownModal({
       />
       <div className="modal modal-open modal-bottom sm:modal-middle">
         <div className="modal-box !max-w-[95%] md:!max-w-[85%] lg:!max-w-[75%] w-full max-h-[85vh] overflow-y-auto">
-          <h3 className="font-bold text-lg mb-4">Markdown Content</h3>
+          <h3 className="font-bold text-lg mb-4">Feature Overview</h3>
           <div className="py-4">
-            <pre className="whitespace-pre-wrap bg-base-200 p-4 rounded-lg overflow-x-auto">
-              {markdown}
-            </pre>
+            {featureOverview ? (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-base mb-2">Description</h4>
+                  <p className="text-sm leading-relaxed">{featureOverview.description}</p>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-base mb-2">Acceptance Criteria</h4>
+                  <ul className="list-disc list-inside space-y-2 text-sm">
+                    {featureOverview.acceptance_criteria.map((criteria, index) => (
+                      <li key={index} className="leading-relaxed">{criteria}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-base mb-2">Progress</h4>
+                  <div className="flex items-center gap-2">
+                    <progress 
+                      className="progress progress-primary w-full" 
+                      value={featureOverview.progress_percentage} 
+                      max="100"
+                    ></progress>
+                    <span className="text-sm font-medium">{featureOverview.progress_percentage}%</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <pre className="whitespace-pre-wrap bg-base-200 p-4 rounded-lg overflow-x-auto">
+                {markdown}
+              </pre>
+            )}
           </div>
           <div className="modal-action">
             <form method="dialog">

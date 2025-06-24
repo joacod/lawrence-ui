@@ -43,10 +43,10 @@ export function Chat() {
       const convertedMessages: Message[] = sessionData.conversation.map(
         (msg: ConversationMessage) => ({
           id: crypto.randomUUID(),
-          content: msg.type === 'user' ? msg.content || '' : msg.response || '',
+          content: msg.type === 'user' ? msg.content || '' : msg.chat?.response || '',
           isUser: msg.type === 'user',
-          markdown: msg.markdown || '',
-          questions: msg.questions,
+          markdown: msg.feature_overview ? JSON.stringify(msg.feature_overview) : '',
+          questions: msg.chat?.questions || [],
         })
       )
 
@@ -126,10 +126,10 @@ export function Chat() {
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
-        content: response.data.response,
+        content: response.data.chat.response,
         isUser: false,
-        markdown: response.data.markdown,
-        questions: response.data.questions,
+        markdown: JSON.stringify(response.data.feature_overview),
+        questions: response.data.chat.questions,
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {

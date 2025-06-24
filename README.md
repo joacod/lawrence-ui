@@ -1,7 +1,32 @@
-# Lawrence UI MVP
+# Lawrence UI
 
-Lawrence is a minimal viable product (MVP) designed to automate and streamline the workflow of software product owners. It uses AI to clarify feature requirements and generate documentation.
+A modern chat interface for Lawrence, an AI-powered tool that helps software product owners clarify feature requirements and generate documentation.
 
-## Project Overview
+## Quick Start
 
-This is the UI side that will consume Lawrence REST API.
+1. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+2. **Start development server**
+   ```bash
+   pnpm dev
+   ```
+
+3. **Open your browser**
+   Navigate to `http://localhost:5173`
+
+## Build for Production
+
+```bash
+pnpm build
+pnpm preview
+```
+
+## Tech Stack
+
+- **Framework**: Preact with TypeScript
+- **Styling**: Tailwind CSS + DaisyUI
+- **Build Tool**: Vite
+- **Package Manager**: pnpm

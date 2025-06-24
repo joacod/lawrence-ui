@@ -15,14 +15,41 @@ export interface Session {
   updated_at: string
 }
 
+export interface FeatureOverview {
+  description: string
+  acceptance_criteria: string[]
+  progress_percentage: number
+}
+
+export interface ChatData {
+  response: string
+  questions: string[]
+  suggestions: string[] | null
+  progress: {
+    answered_questions: number
+    total_questions: number
+  }
+}
+
 export interface ChatResponseData {
   session_id: string | null
   title: string
   created_at: string
   updated_at: string
-  response: string
-  markdown: string
-  questions?: string[]
+  chat: ChatData
+  feature_overview: FeatureOverview
+  tickets?: {
+    backend: Ticket[]
+    frontend: Ticket[]
+  }
+}
+
+export interface Ticket {
+  title: string
+  description: string
+  technical_details: string | null
+  acceptance_criteria: string[] | null
+  cursor_prompt: string | null
 }
 
 export interface HealthResponseData {
@@ -33,10 +60,13 @@ export interface HealthResponseData {
 export interface ConversationMessage {
   type: 'user' | 'assistant'
   content: string | null
-  response: string | null
-  markdown: string | null
-  questions: string[]
   timestamp: string
+  chat: ChatData | null
+  feature_overview: FeatureOverview | null
+  tickets: {
+    backend: Ticket[]
+    frontend: Ticket[]
+  } | null
 }
 
 export interface SessionHistoryData {
