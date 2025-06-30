@@ -1,4 +1,5 @@
 import { Message } from '../models/chat'
+import { CheckmarkIcon } from '../icons/Checkmark'
 
 interface QuestionsProps {
   questions: Message['questions']
@@ -13,16 +14,22 @@ export function Questions({ questions, progress }: QuestionsProps) {
         {`${progress.answered_questions}/${progress.total_questions} questions answered`}
       </div>
       <ul className="list bg-base-200 rounded-box shadow-md p-2">
-        {questions
-          .filter((q) => q.status === 'pending')
-          .map((questionObj, index) => (
+        {questions.map((questionObj, index) => {
+          const isAnswered = questionObj.status !== 'pending'
+          return (
             <li
               key={index}
-              className="list-row text-base-content font-medium py-2 px-3"
+              className={`list-row text-base-content font-medium py-2 px-3 flex items-center justify-between ${
+                isAnswered ? 'text-success' : ''
+              }`}
             >
               <span>{questionObj.question}</span>
+              {isAnswered && (
+                <CheckmarkIcon className="ml-2 text-success text-3xl" />
+              )}
             </li>
-          ))}
+          )
+        })}
       </ul>
     </div>
   )
