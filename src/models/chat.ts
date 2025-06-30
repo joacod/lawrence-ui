@@ -12,6 +12,10 @@ export interface Message {
   questions?: Question[]
   isWarning?: boolean
   isError?: boolean
+  progress?: {
+    answered_questions: number
+    total_questions: number
+  }
 }
 
 export interface Session {

@@ -55,10 +55,28 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                         <div className="font-semibold text-sm mb-2">
                           Pending Questions:
                         </div>
-                        <ul className="list-disc list-inside space-y-1 text-sm">
-                          {message.questions.map((questionObj, index) => (
-                            <li key={index}>{questionObj.question}</li>
-                          ))}
+                        <div className="mb-2 text-xs font-semibold">
+                          {message.progress
+                            ? `${message.progress.answered_questions}/${message.progress.total_questions} questions answered`
+                            : `${
+                                message.questions.filter(
+                                  (q) =>
+                                    q.user_answer !== null &&
+                                    q.user_answer !== ''
+                                ).length
+                              }/${message.questions.length} questions answered`}
+                        </div>
+                        <ul className="list bg-base-200 rounded-box shadow-md p-2">
+                          {message.questions
+                            .filter((q) => q.status === 'pending')
+                            .map((questionObj, index) => (
+                              <li
+                                key={index}
+                                className="list-row text-base-content font-medium py-2 px-3"
+                              >
+                                <span>{questionObj.question}</span>
+                              </li>
+                            ))}
                         </ul>
                       </div>
                     )}
