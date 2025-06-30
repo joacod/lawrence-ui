@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'preact/hooks'
 import { MarkdownModal } from './MarkdownModal'
 import { Message } from '../models/chat'
 import { ClipboardIcon } from '../icons/Clipboard'
+import { Questions } from './Questions'
 
 interface ChatMessagesProps {
   messages: Message[]
@@ -51,34 +52,10 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                   >
                     {message.content}
                     {message.questions && message.questions.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-base-300">
-                        <div className="font-semibold text-sm mb-2">
-                          Pending Questions:
-                        </div>
-                        <div className="mb-2 text-xs font-semibold">
-                          {message.progress
-                            ? `${message.progress.answered_questions}/${message.progress.total_questions} questions answered`
-                            : `${
-                                message.questions.filter(
-                                  (q) =>
-                                    q.user_answer !== null &&
-                                    q.user_answer !== ''
-                                ).length
-                              }/${message.questions.length} questions answered`}
-                        </div>
-                        <ul className="list bg-base-200 rounded-box shadow-md p-2">
-                          {message.questions
-                            .filter((q) => q.status === 'pending')
-                            .map((questionObj, index) => (
-                              <li
-                                key={index}
-                                className="list-row text-base-content font-medium py-2 px-3"
-                              >
-                                <span>{questionObj.question}</span>
-                              </li>
-                            ))}
-                        </ul>
-                      </div>
+                      <Questions
+                        questions={message.questions}
+                        progress={message.progress}
+                      />
                     )}
                   </div>
                   {!message.isUser && message.markdown && (
