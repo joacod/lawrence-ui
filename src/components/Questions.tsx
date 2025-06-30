@@ -10,13 +10,7 @@ export function Questions({ questions, progress }: QuestionsProps) {
     <div className="mt-4 pt-4 border-t border-base-300">
       <div className="font-semibold text-sm mb-2">Pending Questions:</div>
       <div className="mb-2 text-xs font-semibold">
-        {progress
-          ? `${progress.answered_questions}/${progress.total_questions} questions answered`
-          : `${
-              questions.filter(
-                (q) => q.user_answer !== null && q.user_answer !== ''
-              ).length
-            }/${questions.length} questions answered`}
+        {`${progress.answered_questions}/${progress.total_questions} questions answered`}
       </div>
       <ul className="list bg-base-200 rounded-box shadow-md p-2">
         {questions
