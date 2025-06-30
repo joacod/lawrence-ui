@@ -28,11 +28,11 @@ export const chatApi = {
         // Success - return the data as-is
         return data
       case 400:
-        // Bad Request (security_rejection) - return as warning
+        // Bad Request (security_rejection, context_deviation) - return as warning
         return {
           data: null,
           error: {
-            type: 'security_rejection',
+            type: data.error?.type || 'security_rejection',
             message: data.error?.message || 'Invalid request',
           },
         }
@@ -70,7 +70,9 @@ export const chatApi = {
     return response.json()
   },
 
-  async getSessionHistory(sessionId: string): Promise<ApiResponse<SessionHistoryData[]>> {
+  async getSessionHistory(
+    sessionId: string
+  ): Promise<ApiResponse<SessionHistoryData[]>> {
     const response = await fetch(`${API_URL}/session/${sessionId}`)
 
     if (!response.ok) {

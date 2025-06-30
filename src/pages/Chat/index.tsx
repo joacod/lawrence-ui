@@ -41,13 +41,19 @@ export function Chat() {
 
       // Convert conversation messages to the Message format
       const convertedMessages: Message[] = sessionData.conversation.map(
-        (msg: ConversationMessage) => ({
-          id: crypto.randomUUID(),
-          content: msg.type === 'user' ? msg.content || '' : msg.chat?.response || '',
-          isUser: msg.type === 'user',
-          markdown: msg.feature_overview ? JSON.stringify(msg.feature_overview) : '',
-          questions: msg.chat?.questions || [],
-        })
+        (msg: ConversationMessage) => {
+          const isUser = msg.type === 'user';
+          return {
+            id: crypto.randomUUID(),
+            content: isUser ? msg.content || '' : msg.chat?.response || '',
+            isUser,
+            markdown: msg.feature_overview ? JSON.stringify(msg.feature_overview) : '',
+            questions: msg.chat?.questions || [],
+            ...(isUser ? {} : { progress: msg.chat?.progress }),
+            isWarning: false,
+            isError: false,
+          };
+        }
       )
 
       setMessages(convertedMessages)
@@ -130,6 +136,9 @@ export function Chat() {
         isUser: false,
         markdown: JSON.stringify(response.data.feature_overview),
         questions: response.data.chat.questions,
+        progress: response.data.chat.progress,
+        isWarning: false,
+        isError: false,
       }
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {

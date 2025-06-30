@@ -1,11 +1,21 @@
+export interface Question {
+  question: string
+  status: string
+  user_answer: string | null
+}
+
 export interface Message {
   id: string
   content: string
   isUser: boolean
   markdown: string
-  questions?: string[]
+  questions?: Question[]
   isWarning?: boolean
   isError?: boolean
+  progress?: {
+    answered_questions: number
+    total_questions: number
+  }
 }
 
 export interface Session {
@@ -23,7 +33,7 @@ export interface FeatureOverview {
 
 export interface ChatData {
   response: string
-  questions: string[]
+  questions: Question[]
   suggestions: string[] | null
   progress: {
     answered_questions: number

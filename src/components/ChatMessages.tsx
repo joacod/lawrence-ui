@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'preact/hooks'
 import { MarkdownModal } from './MarkdownModal'
 import { Message } from '../models/chat'
 import { ClipboardIcon } from '../icons/Clipboard'
+import { Questions } from './Questions'
 
 interface ChatMessagesProps {
   messages: Message[]
@@ -45,20 +46,16 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
               >
                 <div className="flex items-center gap-2">
                   <div
-                    className={`chat-bubble ${getBubbleClass(message)} max-w-[80%]`}
+                    className={`chat-bubble ${getBubbleClass(
+                      message
+                    )} max-w-[80%]`}
                   >
                     {message.content}
                     {message.questions && message.questions.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-base-300">
-                        <div className="font-semibold text-sm mb-2">
-                          Pending Questions:
-                        </div>
-                        <ul className="list-disc list-inside space-y-1 text-sm">
-                          {message.questions.map((question, index) => (
-                            <li key={index}>{question}</li>
-                          ))}
-                        </ul>
-                      </div>
+                      <Questions
+                        questions={message.questions}
+                        progress={message.progress}
+                      />
                     )}
                   </div>
                   {!message.isUser && message.markdown && (
