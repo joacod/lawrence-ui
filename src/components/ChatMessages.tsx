@@ -45,7 +45,9 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
               >
                 <div className="flex items-center gap-2">
                   <div
-                    className={`chat-bubble ${getBubbleClass(message)} max-w-[80%]`}
+                    className={`chat-bubble ${getBubbleClass(
+                      message
+                    )} max-w-[80%]`}
                   >
                     {message.content}
                     {message.questions && message.questions.length > 0 && (
@@ -54,8 +56,8 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                           Pending Questions:
                         </div>
                         <ul className="list-disc list-inside space-y-1 text-sm">
-                          {message.questions.map((question, index) => (
-                            <li key={index}>{question}</li>
+                          {message.questions.map((questionObj, index) => (
+                            <li key={index}>{questionObj.question}</li>
                           ))}
                         </ul>
                       </div>
