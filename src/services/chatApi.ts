@@ -81,4 +81,21 @@ export const chatApi = {
 
     return response.json()
   },
+
+  async getSessions(): Promise<
+    { id: string; title: string; created_at: string; updated_at: string }[]
+  > {
+    const response = await fetch(`${API_URL}/sessions`)
+    if (!response.ok) {
+      throw new Error('Failed to fetch sessions')
+    }
+    const data = await response.json()
+
+    return data.map((session: any) => ({
+      id: session.session_id,
+      title: session.title,
+      created_at: session.created_at || '',
+      updated_at: session.updated_at,
+    }))
+  },
 }
