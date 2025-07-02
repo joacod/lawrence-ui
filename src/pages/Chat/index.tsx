@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 import { chatApi } from '../../services/chatApi'
 import { ChatMessages } from '../../components/ChatMessages'
 import { ChatInput } from '../../components/ChatInput'
@@ -11,6 +11,18 @@ export function Chat() {
   const [isLoading, setIsLoading] = useState(false)
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [sessions, setSessions] = useState<Session[]>([])
+
+  useEffect(() => {
+    async function fetchSessions() {
+      try {
+        const sessions = await chatApi.getSessions()
+        setSessions(sessions)
+      } catch (error) {
+        console.error('Failed to load sessions:', error)
+      }
+    }
+    fetchSessions()
+  }, [])
 
   const handleNewChat = () => {
     setMessages([])
@@ -42,17 +54,19 @@ export function Chat() {
       // Convert conversation messages to the Message format
       const convertedMessages: Message[] = sessionData.conversation.map(
         (msg: ConversationMessage) => {
-          const isUser = msg.type === 'user';
+          const isUser = msg.type === 'user'
           return {
             id: crypto.randomUUID(),
             content: isUser ? msg.content || '' : msg.chat?.response || '',
             isUser,
-            markdown: msg.feature_overview ? JSON.stringify(msg.feature_overview) : '',
+            markdown: msg.feature_overview
+              ? JSON.stringify(msg.feature_overview)
+              : '',
             questions: msg.chat?.questions || [],
             ...(isUser ? {} : { progress: msg.chat?.progress }),
             isWarning: false,
             isError: false,
-          };
+          }
         }
       )
 
