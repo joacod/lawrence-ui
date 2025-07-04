@@ -1,0 +1,96 @@
+---
+description: Project-wide coding standards and guidelines, applied to all relevant source files
+globs:
+alwaysApply: true
+---
+# Lawrence UI - Project Rules
+
+## Project Overview
+This is a modern web application built with Preact, Vite, Tailwind CSS, and TypeScript. The project uses DaisyUI for pre-built components and follows a component-based architecture.
+
+## Technology Stack
+- Frontend Framework: Preact (React-compatible, lightweight)
+- Build Tool: Vite (fast development, optimized builds)
+- Styling: Tailwind CSS + DaisyUI
+- Language: TypeScript
+- Package Manager: pnpm
+- Linting: ESLint with Preact config
+
+## Directory Structure
+- src/components/ - Reusable UI components
+- src/pages/ - Page components and routes
+- src/services/ - Business logic and API calls
+- src/models/ - TypeScript interfaces and types
+- src/icons/ - Icon assets
+- src/assets/ - Static assets (images, fonts)
+- src/test/ - Test files
+
+## Coding Standards
+
+### Preact Components
+- Use functional components with hooks
+- Keep components small and focused (single responsibility)
+- Use TypeScript interfaces for props
+- Prefer Preact-specific solutions over React compatibility when possible
+- Use meaningful component names in PascalCase
+
+### TypeScript
+- Define interfaces in src/models/ for props, state, and data
+- Avoid any type - use explicit typing
+- Use strict TypeScript settings as configured
+- Type all component props and API responses
+
+### Styling (Tailwind CSS + DaisyUI)
+- Use Tailwind utility classes for styling
+- Leverage DaisyUI components for pre-designed elements
+- Avoid inline styles or custom CSS unless necessary
+- Use responsive design patterns with Tailwind breakpoints
+- Follow Tailwind's utility-first approach
+
+### File Organization
+- Place components in src/components/
+- Group related files together
+- Use descriptive file names
+- Keep test files near their components or in src/test/
+
+### Performance
+- Use useMemo and useCallback to minimize re-renders
+- Optimize bundle size by avoiding unnecessary dependencies
+- Leverage Vite's code splitting for large components
+- Use Preact's lightweight nature for better performance
+
+### Code Quality
+- Follow ESLint rules (extends "preact" config)
+- Use meaningful variable names in camelCase
+- Write descriptive commit messages
+- Keep functions small and focused
+- Add comments for complex business logic
+
+### Build and Development
+- Use pnpm for package management
+- Leverage Vite's fast refresh during development
+- Use environment variables via import.meta.env
+- Optimize assets by placing them in public/ or src/assets/
+
+## Common Patterns
+- Use hooks for state management (useState, useEffect)
+- Implement proper error boundaries
+- Use TypeScript interfaces for API responses
+- Follow consistent naming conventions
+- Keep components pure when possible
+
+## Avoid
+- Large, monolithic components
+- Inline styles or custom CSS
+- Using any type in TypeScript
+- Mixing different styling approaches
+- Hardcoding configuration values
+- Skipping TypeScript types for props
+
+## File Extensions
+- Use .tsx for Preact components
+- Use .ts for utility functions and services
+- Use .css only for global styles or Tailwind imports
+
+### Testing
+- Testing is optional and follows policies in .cursor/rules/testing-rules.mdc, applied only when explicitly requested

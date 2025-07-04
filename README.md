@@ -5,11 +5,13 @@ A modern chat interface for Lawrence, an AI-powered tool that helps software pro
 ## Quick Start
 
 1. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 2. **Start development server**
+
    ```bash
    pnpm dev
    ```
@@ -24,9 +26,16 @@ pnpm build
 pnpm preview
 ```
 
+## Run Tests
+
+```bash
+pnpm test
+```
+
 ## Tech Stack
 
 - **Framework**: Preact with TypeScript
 - **Styling**: Tailwind CSS + DaisyUI
 - **Build Tool**: Vite
 - **Package Manager**: pnpm
+- **Testing**: Vitest for unit tests, @testing-library/preact for component testing
