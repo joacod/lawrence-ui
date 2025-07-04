@@ -13,7 +13,12 @@ export function TicketList({ tickets }: TicketListProps) {
   return (
     <>
       {tickets.map((ticket, idx) => (
-        <div key={idx} className="mb-6 border-b pb-4">
+        <div
+          key={idx}
+          className={`mb-6 pb-4${
+            idx !== tickets.length - 1 ? ' border-b' : ''
+          }`}
+        >
           <h5 className="font-semibold text-base mb-1">{ticket.title}</h5>
           <p className="text-sm mb-2">{ticket.description}</p>
           {ticket.technical_details && (
