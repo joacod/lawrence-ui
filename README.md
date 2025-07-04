@@ -5,11 +5,13 @@ A modern chat interface for Lawrence, an AI-powered tool that helps software pro
 ## Quick Start
 
 1. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 2. **Start development server**
+
    ```bash
    pnpm dev
    ```
@@ -22,6 +24,12 @@ A modern chat interface for Lawrence, an AI-powered tool that helps software pro
 ```bash
 pnpm build
 pnpm preview
+```
+
+## Run Tests
+
+```bash
+pnpm test
 ```
 
 ## Tech Stack
