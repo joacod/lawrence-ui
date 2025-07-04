@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 # Testing Rules for Lawrence UI
 - Testing guidance is for reference; do not prioritize unless asked
+- We use vitest
 - Write unit tests for components and services when requested
 - Aim for high test coverage on critical logic if testing is requested
-- Place tests in src/test/ directory
 - Test component behavior, not implementation details
