@@ -92,5 +92,5 @@ This is a modern web application built with Preact, Vite, Tailwind CSS, and Type
 - Use .ts for utility functions and services
 - Use .css only for global styles or Tailwind imports
 
-### Testing
+## Testing
 - Testing is optional and follows policies in .cursor/rules/testing-rules.mdc, applied only when explicitly requested

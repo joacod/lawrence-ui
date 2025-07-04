@@ -59,9 +59,13 @@ export function Chat() {
             id: crypto.randomUUID(),
             content: isUser ? msg.content || '' : msg.chat?.response || '',
             isUser,
-            markdown: msg.feature_overview
-              ? JSON.stringify(msg.feature_overview)
-              : '',
+            markdown:
+              !isUser && (msg.feature_overview || msg.tickets)
+                ? JSON.stringify({
+                    feature_overview: msg.feature_overview,
+                    tickets: msg.tickets,
+                  })
+                : '',
             questions: msg.chat?.questions || [],
             ...(isUser ? {} : { progress: msg.chat?.progress }),
             isWarning: false,
@@ -148,7 +152,10 @@ export function Chat() {
         id: crypto.randomUUID(),
         content: response.data.chat.response,
         isUser: false,
-        markdown: JSON.stringify(response.data.feature_overview),
+        markdown: JSON.stringify({
+          feature_overview: response.data.feature_overview,
+          tickets: response.data.tickets,
+        }),
         questions: response.data.chat.questions,
         progress: response.data.chat.progress,
         isWarning: false,
