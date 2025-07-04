@@ -31,16 +31,24 @@ export function MarkdownModal({
         onChange={onClose}
       />
       <div className="modal modal-open modal-bottom sm:modal-middle h-screen">
-        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full !h-[95vh] overflow-y-auto flex flex-col">
+        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full max-h-[95vh] flex flex-col">
           <header className="font-bold text-lg mb-4 border-b pb-4">
             Feature Overview
           </header>
-          <div id="modal-content" className="py-4 flex-1 flex flex-col">
+          <div
+            id="modal-content-container"
+            className="py-4 flex-1 flex flex-col min-h-0"
+          >
             {featureOverview ? (
               <>
-                <div className="space-y-6 flex-1 overflow-y-auto pr-2">
+                <div
+                  id="modal-content"
+                  className="space-y-6 flex-1 min-h-0 overflow-y-auto pr-2"
+                >
                   <section>
-                    <h4 className="font-semibold text-base mb-2">Description</h4>
+                    <h4 className="font-semibold text-base mb-2">
+                      Description
+                    </h4>
                     <p className="text-sm leading-relaxed">
                       {featureOverview.description}
                     </p>
