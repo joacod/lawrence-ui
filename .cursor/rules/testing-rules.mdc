@@ -1,0 +1,11 @@
+---
+description: Do not automatically generate tests, only create tests when explicitly requested by the user
+globs:
+alwaysApply: false
+---
+# Testing Rules for Lawrence UI
+- Testing guidance is for reference; do not prioritize unless asked
+- Write unit tests for components and services when requested
+- Aim for high test coverage on critical logic if testing is requested
+- Place tests in src/test/ directory
+- Test component behavior, not implementation details

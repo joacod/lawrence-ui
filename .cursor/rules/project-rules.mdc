@@ -1,4 +1,6 @@
 ---
+description: Project-wide coding standards and guidelines, applied to all relevant source files
+globs:
 alwaysApply: true
 ---
 # Lawrence UI - Project Rules
@@ -64,12 +66,6 @@ This is a modern web application built with Preact, Vite, Tailwind CSS, and Type
 - Keep functions small and focused
 - Add comments for complex business logic
 
-### Testing
-- Write unit tests for components and services
-- Aim for high test coverage on critical logic
-- Place tests in src/test/ directory
-- Test component behavior, not implementation details
-
 ### Build and Development
 - Use pnpm for package management
 - Leverage Vite's fast refresh during development
@@ -95,3 +91,6 @@ This is a modern web application built with Preact, Vite, Tailwind CSS, and Type
 - Use .tsx for Preact components
 - Use .ts for utility functions and services
 - Use .css only for global styles or Tailwind imports
+
+### Testing
+- Testing is optional and follows policies in .cursor/rules/testing-rules.mdc, applied only when explicitly requested
