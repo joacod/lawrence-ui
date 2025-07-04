@@ -38,3 +38,4 @@ pnpm test
 - **Styling**: Tailwind CSS + DaisyUI
 - **Build Tool**: Vite
 - **Package Manager**: pnpm
+- **Testing**: Vitest for unit tests, @testing-library/preact for component testing

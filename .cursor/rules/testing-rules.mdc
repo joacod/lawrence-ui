@@ -5,7 +5,10 @@ alwaysApply: false
 ---
 # Testing Rules for Lawrence UI
 - Testing guidance is for reference; do not prioritize unless asked
-- We use vitest
+- Do not automatically generate tests, only create tests when explicitly requested by the user
+- Use Vitest as the primary test runner
+- Use @testing-library/preact for component testing
+- Use jsdom as the test environment for UI tests
 - Write unit tests for components and services when requested
 - Aim for high test coverage on critical logic if testing is requested
 - Test component behavior, not implementation details
