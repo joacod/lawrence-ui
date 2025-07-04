@@ -31,34 +31,37 @@ export function MarkdownModal({
         onChange={onClose}
       />
       <div className="modal modal-open modal-bottom sm:modal-middle h-screen">
-        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full !h-[95vh] overflow-y-auto">
-          <h3 className="font-bold text-lg mb-4">Feature Overview</h3>
-          <div className="py-4">
+        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full !h-[95vh] overflow-y-auto flex flex-col">
+          <header className="font-bold text-lg mb-4 border-b pb-4">
+            Feature Overview
+          </header>
+          <div id="modal-content" className="py-4 flex-1 flex flex-col">
             {featureOverview ? (
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-base mb-2">Description</h4>
-                  <p className="text-sm leading-relaxed">
-                    {featureOverview.description}
-                  </p>
-                </div>
+              <>
+                <div className="space-y-6 flex-1 overflow-y-auto pr-2">
+                  <section>
+                    <h4 className="font-semibold text-base mb-2">Description</h4>
+                    <p className="text-sm leading-relaxed">
+                      {featureOverview.description}
+                    </p>
+                  </section>
 
-                <div>
-                  <h4 className="font-semibold text-base mb-2">
-                    Acceptance Criteria
-                  </h4>
-                  <ul className="list-disc list-inside space-y-2 text-sm">
-                    {featureOverview.acceptance_criteria.map(
-                      (criteria, index) => (
-                        <li key={index} className="leading-relaxed">
-                          {criteria}
-                        </li>
-                      )
-                    )}
-                  </ul>
+                  <section>
+                    <h4 className="font-semibold text-base mb-2">
+                      Acceptance Criteria
+                    </h4>
+                    <ul className="list-disc list-inside space-y-2 text-sm">
+                      {featureOverview.acceptance_criteria.map(
+                        (criteria, index) => (
+                          <li key={index} className="leading-relaxed">
+                            {criteria}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </section>
                 </div>
-
-                <div>
+                <section className="mt-6">
                   <h4 className="font-semibold text-base mb-2">Progress</h4>
                   <div className="flex items-center gap-2">
                     <progress
@@ -70,21 +73,21 @@ export function MarkdownModal({
                       {featureOverview.progress_percentage}%
                     </span>
                   </div>
-                </div>
-              </div>
+                </section>
+              </>
             ) : (
-              <pre className="whitespace-pre-wrap bg-base-200 p-4 rounded-lg overflow-x-auto">
-                {markdown}
-              </pre>
+              <div className="text-center text-sm text-gray-500 py-8">
+                No feature overview available.
+              </div>
             )}
           </div>
-          <div className="modal-action">
+          <footer className="modal-action border-t pt-4 mt-4">
             <form method="dialog">
               <button className="btn" onClick={onClose}>
                 Close
               </button>
             </form>
-          </div>
+          </footer>
         </div>
         <label
           className="modal-backdrop"
