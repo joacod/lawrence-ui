@@ -40,15 +40,17 @@ export function MarkdownModal({
         onChange={onClose}
       />
       <div className="modal modal-open modal-bottom sm:modal-middle h-screen">
-        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full max-h-[95vh] flex flex-col">
+        <div className="modal-box !max-w-[95%] md:!max-w-[90%] lg:!max-w-[85%] w-full !h-[95vh] flex flex-col">
           <header className="font-bold text-lg mb-4 border-b pb-4">
             Feature Overview
           </header>
-          <FeatureTabs
-            featureOverview={featureOverview}
-            backendTickets={backendTickets}
-            frontendTickets={frontendTickets}
-          />
+          <div className="flex-1 min-h-0 overflow-y-auto">
+            <FeatureTabs
+              featureOverview={featureOverview}
+              backendTickets={backendTickets}
+              frontendTickets={frontendTickets}
+            />
+          </div>
           <footer className="modal-action border-t pt-4 mt-4">
             <form method="dialog">
               <button className="btn" onClick={onClose}>
