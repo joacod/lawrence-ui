@@ -1,24 +1,24 @@
-import { FeatureOverview } from '../models/chat'
-import { FeatureTabs } from './common/FeatureTabs'
+import { FeatureOverview } from '../../models/chat'
+import { FeatureTabs } from './FeatureTabs'
 
-interface MarkdownModalProps {
+interface OverviewModalProps {
   isOpen: boolean
   onClose: () => void
-  markdown: string
+  overview: string
 }
 
-export function MarkdownModal({
+export function OverviewModal({
   isOpen,
   onClose,
-  markdown,
-}: MarkdownModalProps) {
+  overview,
+}: OverviewModalProps) {
   if (!isOpen) return null
 
   let featureOverview: FeatureOverview | null = null
   let backendTickets: any[] = []
   let frontendTickets: any[] = []
   try {
-    const parsed = JSON.parse(markdown)
+    const parsed = JSON.parse(overview)
     if (parsed && (parsed.feature_overview || parsed.tickets)) {
       featureOverview = parsed.feature_overview || null
       backendTickets = parsed.tickets?.backend || []
@@ -34,7 +34,7 @@ export function MarkdownModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center h-screen">
       <input
         type="checkbox"
-        id="markdown_modal"
+        id="overview_modal"
         className="modal-toggle"
         checked={isOpen}
         onChange={onClose}
@@ -61,7 +61,7 @@ export function MarkdownModal({
         </div>
         <label
           className="modal-backdrop"
-          htmlFor="markdown_modal"
+          htmlFor="overview_modal"
           onClick={onClose}
         >
           Close

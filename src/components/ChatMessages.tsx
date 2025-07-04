@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'preact/hooks'
-import { MarkdownModal } from './MarkdownModal'
+import { OverviewModal } from './OverviewModal/OverviewModal'
 import { Message } from '../models/chat'
 import { ClipboardIcon } from '../icons/Clipboard'
 import { Questions } from './Questions'
@@ -80,10 +80,10 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
           </div>
         </div>
       </div>
-      <MarkdownModal
+      <OverviewModal
         isOpen={selectedMarkdown !== null}
         onClose={() => setSelectedMarkdown(null)}
-        markdown={selectedMarkdown || ''}
+        overview={selectedMarkdown || ''}
       />
     </>
   )
