@@ -34,7 +34,6 @@ export interface FeatureOverview {
 export interface ChatData {
   response: string
   questions: Question[]
-  suggestions: string[] | null
   progress: {
     answered_questions: number
     total_questions: number
