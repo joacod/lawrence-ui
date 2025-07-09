@@ -15,7 +15,7 @@ function getLastAiMsgWithFeatureDone(messages: Message[]) {
       return (
         parsed &&
         parsed.feature_overview &&
-        parsed.feature_overview.progress_percentage === 100
+        parsed.feature_overview.progress_percentage === 0
       )
     } catch {
       return false
@@ -209,7 +209,9 @@ export function Chat() {
         <div className="flex-1 overflow-y-auto">
           <ChatMessages messages={messages} isLoading={isLoading} />
           {sessionId && getLastAiMsgWithFeatureDone(messages) && (
-            <GenerateFeatureButton sessionId={sessionId} />
+            <div className="flex justify-center">
+              <GenerateFeatureButton sessionId={sessionId} />
+            </div>
           )}
         </div>
       </div>
