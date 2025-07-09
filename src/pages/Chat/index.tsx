@@ -4,6 +4,24 @@ import { ChatMessages } from '../../components/ChatMessages'
 import { ChatInput } from '../../components/ChatInput'
 import { ChatSidebar } from '../../components/ChatSidebar'
 import { Message, Session, ConversationMessage } from '../../models/chat'
+import { GenerateFeatureButton } from '../../components/GenerateFeatureButton'
+
+// Helper to find the last AI message with feature_overview.progress_percentage === 100
+function getLastAiMsgWithFeatureDone(messages: Message[]) {
+  return [...messages].reverse().find((msg) => {
+    if (msg.isUser) return false
+    try {
+      const parsed = msg.markdown ? JSON.parse(msg.markdown) : null
+      return (
+        parsed &&
+        parsed.feature_overview &&
+        parsed.feature_overview.progress_percentage === 100
+      )
+    } catch {
+      return false
+    }
+  })
+}
 
 export function Chat() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -190,6 +208,9 @@ export function Chat() {
         />
         <div className="flex-1 overflow-y-auto">
           <ChatMessages messages={messages} isLoading={isLoading} />
+          {sessionId && getLastAiMsgWithFeatureDone(messages) && (
+            <GenerateFeatureButton sessionId={sessionId} />
+          )}
         </div>
       </div>
       <div className="flex-none border-t border-base-300">
