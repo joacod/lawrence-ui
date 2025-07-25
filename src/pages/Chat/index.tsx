@@ -206,7 +206,11 @@ export function Chat() {
           activeSessionId={sessionId}
         />
         <div className="flex-1 overflow-y-auto">
-          <ChatMessages messages={messages} isLoading={isLoading} />
+          <ChatMessages
+            messages={messages}
+            isLoading={isLoading}
+            sessionId={sessionId}
+          />
         </div>
       </div>
       <div className="flex-none border-t border-base-300">

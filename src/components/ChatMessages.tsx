@@ -7,9 +7,14 @@ import { Questions } from './Questions'
 interface ChatMessagesProps {
   messages: Message[]
   isLoading: boolean
+  sessionId: string | null
 }
 
-export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
+export function ChatMessages({
+  messages,
+  isLoading,
+  sessionId,
+}: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [selectedMarkdown, setSelectedMarkdown] = useState<string | null>(null)
 
@@ -84,6 +89,7 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
         isOpen={selectedMarkdown !== null}
         onClose={() => setSelectedMarkdown(null)}
         overview={selectedMarkdown || ''}
+        sessionId={sessionId}
       />
     </>
   )

@@ -98,4 +98,39 @@ export const chatApi = {
       updated_at: session.updated_at,
     }))
   },
+
+  async exportFeature(sessionId: string): Promise<void> {
+    const response = await fetch(`${API_URL}/export_feature/${sessionId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to export feature')
+    }
+
+    // Get the filename from the Content-Disposition header or use a default
+    const contentDisposition = response.headers.get('Content-Disposition')
+    let filename = `feature-export-${sessionId}.zip`
+
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/)
+      if (filenameMatch) {
+        filename = filenameMatch[1]
+      }
+    }
+
+    // Create blob and download
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+  },
 }
