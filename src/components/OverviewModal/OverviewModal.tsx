@@ -8,6 +8,7 @@ interface OverviewModalProps {
   onClose: () => void
   overview: string
   sessionId: string | null
+  isLatestFeature: boolean
 }
 
 export function OverviewModal({
@@ -15,6 +16,7 @@ export function OverviewModal({
   onClose,
   overview,
   sessionId,
+  isLatestFeature,
 }: OverviewModalProps) {
   const [exportingFormat, setExportingFormat] = useState<
     'markdown' | 'pdf' | null
@@ -78,7 +80,7 @@ export function OverviewModal({
           </div>
           <footer className="modal-action border-t pt-4 mt-4">
             <form method="dialog" className="flex gap-2">
-              {sessionId && (
+              {sessionId && isLatestFeature && (
                 <>
                   <button
                     type="button"

@@ -17,6 +17,9 @@ export function ChatMessages({
 }: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [selectedMarkdown, setSelectedMarkdown] = useState<string | null>(null)
+  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
+    null
+  )
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -25,6 +28,32 @@ export function ChatMessages({
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Find the most recent message with feature overview data
+  const getLatestFeatureOverviewMessage = () => {
+    return [...messages].reverse().find((msg) => {
+      if (msg.isUser) return false
+      try {
+        const parsed = msg.markdown ? JSON.parse(msg.markdown) : null
+        return parsed && (parsed.feature_overview || parsed.tickets)
+      } catch {
+        return false
+      }
+    })
+  }
+
+  const latestFeatureMessage = getLatestFeatureOverviewMessage()
+  const isSelectedMessageLatest = selectedMessageId === latestFeatureMessage?.id
+
+  const handleMarkdownClick = (markdown: string, messageId: string) => {
+    setSelectedMarkdown(markdown)
+    setSelectedMessageId(messageId)
+  }
+
+  const handleCloseModal = () => {
+    setSelectedMarkdown(null)
+    setSelectedMessageId(null)
+  }
 
   const getBubbleClass = (message: Message) => {
     if (message.isUser) {
@@ -66,7 +95,9 @@ export function ChatMessages({
                   {!message.isUser && message.markdown && (
                     <button
                       className="btn btn-soft btn-sm"
-                      onClick={() => setSelectedMarkdown(message.markdown)}
+                      onClick={() =>
+                        handleMarkdownClick(message.markdown, message.id)
+                      }
                     >
                       <ClipboardIcon />
                     </button>
@@ -87,9 +118,10 @@ export function ChatMessages({
       </div>
       <OverviewModal
         isOpen={selectedMarkdown !== null}
-        onClose={() => setSelectedMarkdown(null)}
+        onClose={handleCloseModal}
         overview={selectedMarkdown || ''}
         sessionId={sessionId}
+        isLatestFeature={isSelectedMessageLatest}
       />
     </>
   )
