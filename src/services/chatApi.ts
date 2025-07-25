@@ -99,12 +99,19 @@ export const chatApi = {
     }))
   },
 
-  async exportFeature(sessionId: string): Promise<void> {
-    const response = await fetch(`${API_URL}/export_feature/${sessionId}`, {
+  async exportFeature(
+    sessionId: string,
+    format: 'markdown' | 'pdf'
+  ): Promise<void> {
+    const response = await fetch(`${API_URL}/export_feature`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        session_id: sessionId,
+        format: format,
+      }),
     })
 
     if (!response.ok) {
@@ -113,7 +120,9 @@ export const chatApi = {
 
     // Get the filename from the Content-Disposition header or use a default
     const contentDisposition = response.headers.get('Content-Disposition')
-    let filename = `feature-export-${sessionId}.zip`
+    let filename = `feature-export-${sessionId}.${
+      format === 'pdf' ? 'pdf' : 'md'
+    }`
 
     if (contentDisposition) {
       const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/)
@@ -124,13 +133,32 @@ export const chatApi = {
 
     // Create blob and download
     const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = filename
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    window.URL.revokeObjectURL(url)
+
+    if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+      // For IE/Edge
+      ;(window.navigator as any).msSaveOrOpenBlob(blob, filename)
+    } else {
+      // For modern browsers
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.download = filename
+      link.target = '_blank'
+
+      // Prevent router interference
+      link.addEventListener('click', (e) => {
+        e.stopPropagation()
+      })
+
+      document.body.appendChild(link)
+      link.click()
+
+      // Clean up immediately
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }, 100)
+    }
   },
 }
