@@ -98,17 +98,4 @@ export const chatApi = {
       updated_at: session.updated_at,
     }))
   },
-
-  async generateFeature(sessionId: string): Promise<any> {
-    const response = await fetch(`${API_URL}/generate_feature/${sessionId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    if (!response.ok) {
-      throw new Error('Failed to generate feature')
-    }
-    return response.json()
-  },
 }
