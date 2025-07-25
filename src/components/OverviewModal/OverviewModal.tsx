@@ -1,17 +1,27 @@
+import { useState } from 'preact/hooks'
 import { FeatureOverview } from '../../models/chat'
 import { FeatureTabs } from './FeatureTabs'
+import { chatApi } from '../../services/chatApi'
 
 interface OverviewModalProps {
   isOpen: boolean
   onClose: () => void
   overview: string
+  sessionId: string | null
+  isLatestFeature: boolean
 }
 
 export function OverviewModal({
   isOpen,
   onClose,
   overview,
+  sessionId,
+  isLatestFeature,
 }: OverviewModalProps) {
+  const [exportingFormat, setExportingFormat] = useState<
+    'markdown' | 'pdf' | null
+  >(null)
+
   if (!isOpen) return null
 
   let featureOverview: FeatureOverview | null = null
@@ -28,6 +38,23 @@ export function OverviewModal({
     }
   } catch (error) {
     console.warn('Failed to parse feature overview JSON:', error)
+  }
+
+  const handleExport = async (format: 'markdown' | 'pdf') => {
+    if (!sessionId) {
+      console.error('No session ID available for export')
+      return
+    }
+
+    setExportingFormat(format)
+    try {
+      await chatApi.exportFeature(sessionId, format)
+    } catch (error) {
+      console.error('Failed to export feature:', error)
+      // Could add toast notification here in the future
+    } finally {
+      setExportingFormat(null)
+    }
   }
 
   return (
@@ -52,7 +79,33 @@ export function OverviewModal({
             />
           </div>
           <footer className="modal-action border-t pt-4 mt-4">
-            <form method="dialog">
+            <form method="dialog" className="flex gap-2">
+              {sessionId && isLatestFeature && (
+                <>
+                  <button
+                    type="button"
+                    className={`btn btn-primary ${
+                      exportingFormat === 'markdown' ? 'loading' : ''
+                    }`}
+                    onClick={() => handleExport('markdown')}
+                    disabled={exportingFormat !== null}
+                  >
+                    {exportingFormat === 'markdown'
+                      ? 'Exporting...'
+                      : 'Export Markdown'}
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn btn-secondary ${
+                      exportingFormat === 'pdf' ? 'loading' : ''
+                    }`}
+                    onClick={() => handleExport('pdf')}
+                    disabled={exportingFormat !== null}
+                  >
+                    {exportingFormat === 'pdf' ? 'Exporting...' : 'Export PDF'}
+                  </button>
+                </>
+              )}
               <button className="btn" onClick={onClose}>
                 Close
               </button>

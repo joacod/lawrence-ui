@@ -99,16 +99,63 @@ export const chatApi = {
     }))
   },
 
-  async generateFeature(sessionId: string): Promise<any> {
-    const response = await fetch(`${API_URL}/generate_feature/${sessionId}`, {
+  async exportFeature(
+    sessionId: string,
+    format: 'markdown' | 'pdf'
+  ): Promise<void> {
+    const response = await fetch(`${API_URL}/export_feature`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        session_id: sessionId,
+        format: format,
+      }),
     })
+
     if (!response.ok) {
-      throw new Error('Failed to generate feature')
+      throw new Error('Failed to export feature')
     }
-    return response.json()
+
+    // Get filename from Content-Disposition header
+    const contentDisposition = response.headers.get('Content-Disposition')
+    const filenameMatch = contentDisposition?.match(/filename=([^;\s]+)/)
+
+    let filename = `export.${format === 'pdf' ? 'pdf' : 'md'}`
+
+    if (filenameMatch && filenameMatch[1]) {
+      filename = filenameMatch[1]
+    }
+
+    // Create blob and download
+    const blob = await response.blob()
+
+    if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+      // For IE/Edge
+      ;(window.navigator as any).msSaveOrOpenBlob(blob, filename)
+    } else {
+      // For modern browsers
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.download = filename
+      link.target = '_blank'
+
+      // Prevent router interference
+      link.addEventListener('click', (e) => {
+        e.stopPropagation()
+      })
+
+      document.body.appendChild(link)
+      link.click()
+
+      // Clean up immediately
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }, 100)
+    }
   },
 }

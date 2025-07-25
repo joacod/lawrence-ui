@@ -4,7 +4,6 @@ import { ChatMessages } from '../../components/ChatMessages'
 import { ChatInput } from '../../components/ChatInput'
 import { ChatSidebar } from '../../components/ChatSidebar'
 import { Message, Session, ConversationMessage } from '../../models/chat'
-import { GenerateFeatureButton } from '../../components/GenerateFeatureButton'
 
 // Helper to find the last AI message with feature_overview.progress_percentage === 100
 function getLastAiMsgWithFeatureDone(messages: Message[]) {
@@ -207,12 +206,11 @@ export function Chat() {
           activeSessionId={sessionId}
         />
         <div className="flex-1 overflow-y-auto">
-          <ChatMessages messages={messages} isLoading={isLoading} />
-          {sessionId && getLastAiMsgWithFeatureDone(messages) && (
-            <div className="flex justify-center">
-              <GenerateFeatureButton sessionId={sessionId} />
-            </div>
-          )}
+          <ChatMessages
+            messages={messages}
+            isLoading={isLoading}
+            sessionId={sessionId}
+          />
         </div>
       </div>
       <div className="flex-none border-t border-base-300">

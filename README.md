@@ -1,6 +1,10 @@
 # Lawrence UI
 
-A modern chat interface for Lawrence, an AI-powered tool that helps software product owners clarify feature requirements and generate documentation.
+A modern chat interface for Lawrence, an AI-powered tool that helps software product owners and managers, to clarify feature requirements and generate documentation.
+
+## Lawrence Backend
+
+The backend is a separate project that provides the API used by this UI. Please refer to [Lawrence Backend](https://github.com/joacod/lawrence) for more information.
 
 ## Quick Start
 
@@ -39,3 +43,11 @@ pnpm test
 - **Build Tool**: Vite
 - **Package Manager**: pnpm
 - **Testing**: Vitest for unit tests, @testing-library/preact for component testing
+
+## ☕️ Did you like the project?
+
+You can collaborate with me giving a star ⭐️ to the project or
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/joacod)
+
+Thanks! 😃
