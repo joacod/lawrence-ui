@@ -118,17 +118,14 @@ export const chatApi = {
       throw new Error('Failed to export feature')
     }
 
-    // Get the filename from the Content-Disposition header or use a default
+    // Get filename from Content-Disposition header
     const contentDisposition = response.headers.get('Content-Disposition')
-    let filename = `feature-export-${sessionId}.${
-      format === 'pdf' ? 'pdf' : 'md'
-    }`
+    const filenameMatch = contentDisposition?.match(/filename=([^;\s]+)/)
 
-    if (contentDisposition) {
-      const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/)
-      if (filenameMatch) {
-        filename = filenameMatch[1]
-      }
+    let filename = `export.${format === 'pdf' ? 'pdf' : 'md'}`
+
+    if (filenameMatch && filenameMatch[1]) {
+      filename = filenameMatch[1]
     }
 
     // Create blob and download
